@@ -1,0 +1,18 @@
+RewriteEngine on
+RewriteBase /
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /([^.]+)\.html\ HTTP
+RewriteRule ^([^.]+)\.html$ /$1 [R=301,L]
+RewriteCond %{REQUEST_URI} !(\.[^./]+)$
+RewriteCond %{REQUEST_fileNAME} !-d
+RewriteCond %{REQUEST_fileNAME} !-f
+RewriteRule (.*) /$1.html
+
+ErrorDocument 404 https://portfori.ru/404.html
+
+SetEnvIfNoCase User-Agent "BLEXBot|SemrushBot|AhrefsBot|MJ12bot|DotBot|SeznamBot|ZoominfoBot|MegaIndex.ru|Exabot|VelenPublicWebCrawler|svetabot|AspiegelBot" bad_bot
+
+<Limit GET POST HEAD>
+Order Allow,Deny
+Allow from all
+Deny from env=bad_bot
+</Limit>
